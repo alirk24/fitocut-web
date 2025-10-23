@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitocut - پلتفرم تناسب اندام و سلامتی</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Vazirmatn', sans-serif; }
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(27, 54, 93, 0.8), rgba(122, 132, 113, 0.6)), 
+                        url('resources/hero-fitness.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .persian-pattern {
+            background-image: radial-gradient(circle at 25% 25%, rgba(27, 54, 93, 0.1) 0%, transparent 50%),
+                              radial-gradient(circle at 75% 75%, rgba(245, 230, 211, 0.1) 0%, transparent 50%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #1B365D, #7A8471);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #1B365D, #2C4A6B);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2C4A6B, #1B365D);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(27, 54, 93, 0.3);
+        }
+        .feature-icon {
+            background: linear-gradient(135deg, #7A8471, #9CAF88);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gradient">Fitocut</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="text-blue-900 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">خانه</a>
+                        <a href="workouts.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">تمرین‌ها</a>
+                        <a href="nutrition.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">تغذیه</a>
+                        <a href="progress.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">پیشرفت</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-blue-600">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+                <a href="index.html" class="text-blue-900 block px-3 py-2 text-base font-medium">خانه</a>
+                <a href="workouts.html" class="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium">تمرین‌ها</a>
+                <a href="nutrition.html" class="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium">تغذیه</a>
+                <a href="progress.html" class="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium">پیشرفت</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center justify-center text-white relative overflow-hidden">
+        <div class="absolute inset-0 persian-pattern"></div>
+        <div class="relative z-10 text-center max-w-4xl mx-auto px-4">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                <span id="typed-text"></span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-gray-100 leading-relaxed">
+                پلتفرم جامع تناسب اندام با برنامه‌های تمرینی هوشمند، راهنمای تغذیه علمی و پیگیری پیشرفت دقیق
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button onclick="scrollToFeatures()" class="btn-primary text-white px-8 py-4 rounded-lg text-lg font-semibold">
+                    شروع فیتنس حرفه‌ای
+                </button>
+                <button onclick="openVideoModal()" class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white/30 transition-all">
+                    مشاهده ویدیو معرفی
+                </button>
+            </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gradient mb-6">ویژگی‌های برتر Fitocut</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    با استفاده از جدیدترین تکنولوژی‌های هوش مصنوعی و علم تمرین، مسیر تناسب اندام را برای شما آسان کرده‌ایم
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="card-hover bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+                    <div class="feature-icon">
+                        💪
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4 text-center">برنامه‌های تمرینی هوشمند</h3>
+                    <p class="text-gray-600 text-center leading-relaxed">
+                        برنامه‌های تمرینی شخصی‌سازی شده بر اساس سطح آمادگی، هدف‌ها و تجهیزات موجود. هر تمرین با ویدیو و توضیحات کامل همراه است.
+                    </p>
+                    <div class="mt-6 text-center">
+                        <a href="workouts.html" class="text-blue-600 hover:text-blue-800 font-semibold">کشف برنامه‌ها →</a>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+                    <div class="feature-icon">
+                        🥗
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4 text-center">راهنمای تغذیه علمی</h3>
+                    <p class="text-gray-600 text-center leading-relaxed">
+                        برنامه‌های غذایی متناسب با فرهنگ ایرانی، محاسبه دقیق کالری و دریافت ماکرونوترینت‌ها. شامل غذاهای سنتی سالم و مدرن.
+                    </p>
+                    <div class="mt-6 text-center">
+                        <a href="nutrition.html" class="text-blue-600 hover:text-blue-800 font-semibold">مشاهده برنامه‌ها →</a>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+                    <div class="feature-icon">
+                        📊
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4 text-center">پیگیری پیشرفت دقیق</h3>
+                    <p class="text-gray-600 text-center leading-relaxed">
+                        تجزیه و تحلیل کامل پیشرفت با نمودارهای تعاملی، مقایسه عکس‌ها و ثبت اندازه‌ها. انگیزه خود را با مشاهده پیشرفت حفظ کنید.
+                    </p>
+                    <div class="mt-6 text-center">
+                        <a href="progress.html" class="text-blue-600 hover:text-blue-800 font-semibold">مشاهده داشبورد →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="py-16 bg-gradient-to-r from-blue-900 to-blue-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 text-center">
+                <div class="stat-item">
+                    <div class="text-4xl md:text-5xl font-bold mb-2" data-count="50000">0</div>
+                    <div class="text-lg text-blue-200">کاربر فعال</div>
+                </div>
+                <div class="stat-item">
+                    <div class="text-4xl md:text-5xl font-bold mb-2" data-count="1200">0</div>
+                    <div class="text-lg text-blue-200">تمرین مختلف</div>
+                </div>
+                <div class="stat-item">
+                    <div class="text-4xl md:text-5xl font-bold mb-2" data-count="500">0</div>
+                    <div class="text-lg text-blue-200">غذای سالم</div>
+                </div>
+                <div class="stat-item">
+                    <div class="text-4xl md:text-5xl font-bold mb-2" data-count="95">0</div>
+                    <div class="text-lg text-blue-200">درصد رضایت</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gradient mb-6">موفقیت کاربران ما</h2>
+                <p class="text-xl text-gray-600">داستان‌های الهام‌بخش از تغییرات زندگی کاربران Fitocut</p>
+            </div>
+            
+            <div class="splide" id="testimonial-slider">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        <li class="splide__slide">
+                            <div class="bg-white rounded-2xl p-8 shadow-lg max-w-2xl mx-auto">
+                                <div class="flex items-center mb-6">
+                                    <img src="resources/transformation-1.jpg" alt="سارا محمدی" class="w-16 h-16 rounded-full object-cover mr-4">
+                                    <div>
+                                        <h4 class="font-bold text-gray-900">سارا محمدی</h4>
+                                        <p class="text-gray-600">کاهش ۱۵ کیلوگرم در ۶ ماه</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-700 leading-relaxed text-lg">
+                                    "Fitocut زندگی من را کاملاً تغییر داد. برنامه‌های تمرینی متنوع و راهنمای تغذیه‌ای دقیق باعث شدند که به وزن ایده‌آل خود برسم و انرژی فوق‌العاده‌ای داشته باشم."
+                                </p>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="bg-white rounded-2xl p-8 shadow-lg max-w-2xl mx-auto">
+                                <div class="flex items-center mb-6">
+                                    <img src="resources/trainer-1.jpg" alt="علی رضایی" class="w-16 h-16 rounded-full object-cover mr-4">
+                                    <div>
+                                        <h4 class="font-bold text-gray-900">علی رضایی</h4>
+                                        <p class="text-gray-600">افزایش ۱۰ کیلوگرم عضله</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-700 leading-relaxed text-lg">
+                                    "به عنوان یک ورزشکار، دقت برنامه‌های تمرینی و تنوع تمرین‌ها در Fitocut باعث شد به اهداف بدنسازی‌ام برسم. پشتیبانی علمی پلتفرم فوق‌العاده است."
+                                </p>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="bg-white rounded-2xl p-8 shadow-lg max-w-2xl mx-auto">
+                                <div class="flex items-center mb-6">
+                                    <img src="resources/workout-1.jpg" alt="نازنین احمدی" class="w-16 h-16 rounded-full object-cover mr-4">
+                                    <div>
+                                        <h4 class="font-bold text-gray-900">نازنین احمدی</h4>
+                                        <p class="text-gray-600">بهبود سلامت عمومی</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-700 leading-relaxed text-lg">
+                                    "بعد از سال‌ها تلاش برای تناسب اندام، بالاخره با Fitocut به نتیجه رسیدم. برنامه غذایی متناسب با سبک زندگی ایرانی و پشتیبانی مداوم عالی است."
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-blue-900 to-blue-800 text-white">
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">آماده شروع سفر تناسب اندام هستید؟</h2>
+            <p class="text-xl mb-8 text-blue-200 leading-relaxed">
+                به هزاران کاربر موفق ما بپیوندید و تجربه کنید که چگونه Fitocut می‌تواند به شما در رسیدن به اهداف تناسب اندام کمک کند.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="startFreeTrial()" class="bg-white text-blue-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-all">
+                    شروع رایگان ۷ روزه
+                </button>
+                <button onclick="learnMore()" class="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-900 transition-all">
+                    اطلاعات بیشتر
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-gradient mb-4">Fitocut</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        پلتفرم جامع تناسب اندام با برنامه‌های تمرینی هوشمند، راهنمای تغذیه علمی و پیگیری پیشرفت دقیق.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">خدمات</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="workouts.html" class="hover:text-white transition-colors">برنامه‌های تمرینی</a></li>
+                        <li><a href="nutrition.html" class="hover:text-white transition-colors">راهنمای تغذیه</a></li>
+                        <li><a href="progress.html" class="hover:text-white transition-colors">پیگیری پیشرفت</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">پشتیبانی</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">راهنما</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">تماس با ما</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">سوالات متداول</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">ارتباط با ما</h4>
+                    <div class="space-y-2 text-gray-400">
+                        <p>ایمیل: info@fitocut.com</p>
+                        <p>تلفن: ۰۲۱-۱۲۳۴۵۶۷۸</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; ۲۰۲۴ Fitocut. تمامی حقوق محفوظ است.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="fixed inset-0 bg-black bg-opacity-75 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-4 max-w-4xl w-full mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">ویدیو معرفی Fitocut</h3>
+                <button onclick="closeVideoModal()" class="text-gray-500 hover:text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="aspect-video bg-gray-200 rounded-lg flex items-center justify-center">
+                <p class="text-gray-600">ویدیو معرفی به زودی...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پیگیری پیشرفت - Fitocut</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Vazirmatn', sans-serif; }
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(27, 54, 93, 0.9), rgba(122, 132, 113, 0.7)), 
+                        url('resources/progress-dashboard.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #1B365D, #7A8471);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #1B365D, #2C4A6B);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2C4A6B, #1B365D);
+            transform: translateY(-2px);
+        }
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.35s;
+            transform-origin: 50% 50%;
+        }
+        .achievement-badge {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+        }
+        .achievement-badge:hover {
+            transform: scale(1.1);
+        }
+        .achievement-badge.gold {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+        }
+        .achievement-badge.silver {
+            background: linear-gradient(135deg, #e5e7eb, #9ca3af);
+            color: white;
+        }
+        .achievement-badge.bronze {
+            background: linear-gradient(135deg, #d97706, #92400e);
+            color: white;
+        }
+        .measurement-input {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+        .measurement-input:focus {
+            border-color: #1B365D;
+            box-shadow: 0 0 0 3px rgba(27, 54, 93, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gradient">Fitocut</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">خانه</a>
+                        <a href="workouts.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">تمرین‌ها</a>
+                        <a href="nutrition.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">تغذیه</a>
+                        <a href="progress.html" class="text-blue-900 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">پیشرفت</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg pt-24 pb-16 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">پیگیری پیشرفت دقیق</h1>
+            <p class="text-xl md:text-2xl mb-8 text-gray-100 max-w-3xl mx-auto">
+                با تجزیه و تحلیل کامل پیشرفت، نمودارهای تعاملی و مقایسه عکس‌ها، انگیزه خود را برای رسیدن به اهداف حفظ کنید
+            </p>
+        </div>
+    </section>
+
+    <!-- Progress Overview -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-4 gap-6 mb-12">
+                <!-- Weight Progress -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+                    <div class="relative inline-flex items-center justify-center mb-4">
+                        <svg class="progress-ring w-24 h-24">
+                            <circle class="progress-ring-circle stroke-gray-200" stroke-width="4" fill="transparent" r="40" cx="48" cy="48"/>
+                            <circle class="progress-ring-circle stroke-blue-600" stroke-width="4" fill="transparent" r="40" cx="48" cy="48" 
+                                    stroke-dasharray="251.2" stroke-dashoffset="62.8"/>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-2xl font-bold text-blue-600">۷۵٪</span>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">کاهش وزن</h3>
+                    <p class="text-gray-600 text-sm">۷ کیلوگرم از ۱۰ کیلوگرم هدف</p>
+                </div>
+
+                <!-- Strength Progress -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+                    <div class="relative inline-flex items-center justify-center mb-4">
+                        <svg class="progress-ring w-24 h-24">
+                            <circle class="progress-ring-circle stroke-gray-200" stroke-width="4" fill="transparent" r="40" cx="48" cy="48"/>
+                            <circle class="progress-ring-circle stroke-green-600" stroke-width="4" fill="transparent" r="40" cx="48" cy="48" 
+                                    stroke-dasharray="251.2" stroke-dashoffset="50.24"/>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-2xl font-bold text-green-600">۸۰٪</span>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">افزایش قدرت</h3>
+                    <p class="text-gray-600 text-sm">۴۰ کیلوگرم افزایش در پرس سینه</p>
+                </div>
+
+                <!-- Consistency -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+                    <div class="relative inline-flex items-center justify-center mb-4">
+                        <svg class="progress-ring w-24 h-24">
+                            <circle class="progress-ring-circle stroke-gray-200" stroke-width="4" fill="transparent" r="40" cx="48" cy="48"/>
+                            <circle class="progress-ring-circle stroke-orange-600" stroke-width="4" fill="transparent" r="40" cx="48" cy="48" 
+                                    stroke-dasharray="251.2" stroke-dashoffset="25.12"/>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-2xl font-bold text-orange-600">۹۰٪</span>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">تداوم تمرین</h3>
+                    <p class="text-gray-600 text-sm">۲۷ روز از ۳۰ روز ماه</p>
+                </div>
+
+                <!-- Nutrition -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+                    <div class="relative inline-flex items-center justify-center mb-4">
+                        <svg class="progress-ring w-24 h-24">
+                            <circle class="progress-ring-circle stroke-gray-200" stroke-width="4" fill="transparent" r="40" cx="48" cy="48"/>
+                            <circle class="progress-ring-circle stroke-purple-600" stroke-width="4" fill="transparent" r="40" cx="48" cy="48" 
+                                    stroke-dasharray="251.2" stroke-dashoffset="87.92"/>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-2xl font-bold text-purple-600">۶۵٪</span>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">رعایت رژیم</h3>
+                    <p class="text-gray-600 text-sm">رعایت ۶۵٪ از اهداف تغذیه‌ای</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Charts and Analytics -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-8 mb-12">
+                <!-- Weight Chart -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-gray-900">تغییرات وزن</h3>
+                        <select class="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            <option value="3m">۳ ماه</option>
+                            <option value="6m">۶ ماه</option>
+                            <option value="1y">۱ سال</option>
+                        </select>
+                    </div>
+                    <div id="weight-chart" style="height: 300px;"></div>
+                </div>
+
+                <!-- Strength Chart -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-gray-900">پیشرفت قدرت</h3>
+                        <select class="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            <option value="all">همه تمرین‌ها</option>
+                            <option value="chest">پرس سینه</option>
+                            <option value="squat">اسکات</option>
+                            <option value="deadlift">ددلیفت</option>
+                        </select>
+                    </div>
+                    <div id="strength-chart" style="height: 300px;"></div>
+                </div>
+            </div>
+
+            <!-- Activity Heatmap -->
+            <div class="bg-white rounded-2xl shadow-lg p-6">
+                <h3 class="text-xl font-bold text-gray-900 mb-6">فعالیت روزانه</h3>
+                <div id="activity-heatmap" style="height: 200px;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Body Measurements -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gradient mb-6">اندازه‌گیری بدن</h2>
+                <p class="text-xl text-gray-600">ثبت و پیگیری تغییرات اندازه‌های بدن برای ارزیابی دقیق پیشرفت</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Measurement Input -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-6">ثبت اندازه‌های جدید</h3>
+                    <form id="measurement-form" class="space-y-4">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">وزن (کیلوگرم)</label>
+                                <input type="number" step="0.1" placeholder="۷۵٫۵" 
+                                       class="measurement-input w-full">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">درصد چربی</label>
+                                <input type="number" step="0.1" placeholder="۱۵٫۲" 
+                                       class="measurement-input w-full">
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">دور کمر (سانتی‌متر)</label>
+                                <input type="number" step="0.1" placeholder="۸۰" 
+                                       class="measurement-input w-full">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">دور بازو (سانتی‌متر)</label>
+                                <input type="number" step="0.1" placeholder="۳۵" 
+                                       class="measurement-input w-full">
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">دور ران (سانتی‌متر)</label>
+                                <input type="number" step="0.1" placeholder="۵۵" 
+                                       class="measurement-input w-full">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">دور سینه (سانتی‌متر)</label>
+                                <input type="number" step="0.1" placeholder="۱۰۰" 
+                                       class="measurement-input w-full">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary text-white px-6 py-3 rounded-lg w-full">
+                            ثبت اندازه‌ها
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Progress Photos -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-6">عکس‌های پیشرفت</h3>
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="text-center">
+                                <div class="bg-gray-200 rounded-lg p-8 mb-2">
+                                    <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                </div>
+                                <p class="text-sm text-gray-600">عکس قبل</p>
+                                <p class="text-xs text-gray-500">۱۵ آبان ۱۴۰۳</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="bg-gray-200 rounded-lg p-8 mb-2">
+                                    <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                </div>
+                                <p class="text-sm text-gray-600">عکس بعد</p>
+                                <p class="text-xs text-gray-500">۱۵ آبان ۱۴۰۳</p>
+                            </div>
+                        </div>
+                        
+                        <button onclick="uploadPhoto()" class="w-full border-2 border-dashed border-gray-300 rounded-lg p-6 text-gray-500 hover:border-blue-500 hover:text-blue-600 transition-colors">
+                            <svg class="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            آپلود عکس جدید
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gradient mb-6">دستاوردها</h2>
+                <p class="text-xl text-gray-600">افتخارات و دستاوردهای شما در مسیر تناسب اندام</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+                    <div class="achievement-badge gold mb-4">🏆</div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">اولین تمرین</h3>
+                    <p class="text-gray-600 text-sm">کامل کردن اولین تمرین</p>
+                    <div class="mt-3 text-xs text-gray-500">کسب شده در ۱ آبان ۱۴۰۳</div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+                    <div class="achievement-badge silver mb-4">🔥</div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">رکورد دما</h3>
+                    <p class="text-gray-600 text-sm">۷ روز تمرین متوالی</p>
+                    <div class="mt-3 text-xs text-gray-500">کسب شده در ۸ آبان ۱۴۰۳</div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+                    <div class="achievement-badge bronze mb-4">💪</div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">قدرتمند</h3>
+                    <p class="text-gray-600 text-sm">افزایش ۱۰ کیلوگرم در پرس سینه</p>
+                    <div class="mt-3 text-xs text-gray-500">کسب شده در ۱۵ آبان ۱۴۰۳</div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center opacity-50">
+                    <div class="achievement-badge bg-gray-300 mb-4">🎯</div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">هدف وزنی</h3>
+                    <p class="text-gray-600 text-sm">رسیدن به وزن هدف</p>
+                    <div class="mt-3 text-xs text-gray-500">۳ کیلوگرم مانده</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold text-gradient mb-4">Fitocut</h3>
+                <p class="text-gray-400 mb-8">پلتفرم جامع تناسب اندام و سلامتی</p>
+                <div class="border-t border-gray-800 pt-8">
+                    <p>&copy; ۲۰۲۴ Fitocut. تمامی حقوق محفوظ است.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

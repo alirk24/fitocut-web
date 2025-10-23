@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>راهنمای تغذیه - Fitocut</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Vazirmatn', sans-serif; }
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(27, 54, 93, 0.9), rgba(122, 132, 113, 0.7)), 
+                        url('resources/persian-nutrition.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #1B365D, #7A8471);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #1B365D, #2C4A6B);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2C4A6B, #1B365D);
+            transform: translateY(-2px);
+        }
+        .meal-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .meal-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .macro-bar {
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #e5e7eb;
+        }
+        .macro-progress {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        .water-glass {
+            width: 30px;
+            height: 40px;
+            border: 2px solid #1B365D;
+            border-radius: 0 0 15px 15px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .water-glass.filled {
+            background-color: #3b82f6;
+            border-color: #1d4ed8;
+        }
+        .water-glass:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gradient">Fitocut</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">خانه</a>
+                        <a href="workouts.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">تمرین‌ها</a>
+                        <a href="nutrition.html" class="text-blue-900 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">تغذیه</a>
+                        <a href="progress.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">پیشرفت</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg pt-24 pb-16 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">راهنمای تغذیه علمی</h1>
+            <p class="text-xl md:text-2xl mb-8 text-gray-100 max-w-3xl mx-auto">
+                برنامه‌های غذایی متناسب با فرهنگ ایرانی، محاسبه دقیق کالری و دریافت ماکرونوترینت‌ها برای رسیدن به اهداف تناسب اندام
+            </p>
+        </div>
+    </section>
+
+    <!-- Daily Nutrition Dashboard -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Main Dashboard -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Calories Overview -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-6">مرور کلی امروز</h2>
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-blue-600 mb-2">1,850</div>
+                                <div class="text-gray-600 mb-2">کالری مصرف شده</div>
+                                <div class="text-sm text-gray-500">از 2,200 هدف</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-green-600 mb-2">350</div>
+                                <div class="text-gray-600 mb-2">کالری سوزانده شده</div>
+                                <div class="text-sm text-gray-500">از تمرین</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-orange-600 mb-2">1,500</div>
+                                <div class="text-gray-600 mb-2">کالری خالص</div>
+                                <div class="text-sm text-gray-500">باقیمانده: 700</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Macros Breakdown -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-6">دریافت ماکرونوترینت‌ها</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-700">پروتئین</span>
+                                    <span class="text-sm text-gray-500">۸۵g / ۱۱۰g</span>
+                                </div>
+                                <div class="macro-bar">
+                                    <div class="macro-progress bg-blue-500" style="width: 77%"></div>
+                                </div>
+                                <div class="text-xs text-gray-500 mt-1">۷۷٪ از هدف</div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-700">کربوهیدرات</span>
+                                    <span class="text-sm text-gray-500">۲۰۰g / ۲۷۵g</span>
+                                </div>
+                                <div class="macro-bar">
+                                    <div class="macro-progress bg-green-500" style="width: 73%"></div>
+                                </div>
+                                <div class="text-xs text-gray-500 mt-1">۷۳٪ از هدف</div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-700">چربی</span>
+                                    <span class="text-sm text-gray-500">۵۵g / ۷۳g</span>
+                                </div>
+                                <div class="macro-bar">
+                                    <div class="macro-progress bg-orange-500" style="width: 75%"></div>
+                                </div>
+                                <div class="text-xs text-gray-500 mt-1">۷۵٪ از هدف</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Meal Planning -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-bold text-gray-900">برنامه غذایی امروز</h3>
+                            <button onclick="addMeal()" class="text-blue-600 hover:text-blue-800 font-semibold">
+                                + افزودن وعده
+                            </button>
+                        </div>
+                        
+                        <div class="space-y-4" id="meal-plan">
+                            <!-- Breakfast -->
+                            <div class="meal-card p-4 border border-gray-200">
+                                <div class="flex justify-between items-center mb-3">
+                                    <h4 class="font-semibold text-gray-900">صبحانه</h4>
+                                    <span class="text-sm text-gray-500">۴۵۰ کالری</span>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-700">عدسی با نان سنگک</span>
+                                        <span class="text-sm text-gray-500">۱ لیوان</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-700">پنیر کم‌چرب</span>
+                                        <span class="text-sm text-gray-500">۳۰ گرم</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-700">گوجه و خیار</span>
+                                        <span class="text-sm text-gray-500">۱۰۰ گرم</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Lunch -->
+                            <div class="meal-card p-4 border border-gray-200">
+                                <div class="flex justify-between items-center mb-3">
+                                    <h4 class="font-semibold text-gray-900">ناهار</h4>
+                                    <span class="text-sm text-gray-500">۶۵۰ کالری</span>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-700">کباب مرغ با برنج</span>
+                                        <span class="text-sm text-gray-500">۱ پرس</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-700">سالاد شیرازی</span>
+                                        <span class="text-sm text-gray-500">۱ لیوان</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-700">ماست کم‌چرب</span>
+                                        <span class="text-sm text-gray-500">۱۰۰ گرم</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dinner -->
+                            <div class="meal-card p-4 border border-gray-200">
+                                <div class="flex justify-between items-center mb-3">
+                                    <h4 class="font-semibold text-gray-900">شام</h4>
+                                    <span class="text-sm text-gray-500">۵۵۰ کالری</span>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-700">قورمه‌سبزی با گوشت کم‌چرب</span>
+                                        <span class="text-sm text-gray-500">۱ لیوان</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-700">برنج سفید</span>
+                                        <span class="text-sm text-gray-500">۱۰۰ گرم</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-700">سبزی خوردن</span>
+                                        <span class="text-sm text-gray-500">۵۰ گرم</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Snacks -->
+                            <div class="meal-card p-4 border border-gray-200">
+                                <div class="flex justify-between items-center mb-3">
+                                    <h4 class="font-semibold text-gray-900">میان‌وعده‌ها</h4>
+                                    <span class="text-sm text-gray-500">۲۰۰ کالری</span>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-700">پسته خام</span>
+                                        <span class="text-sm text-gray-500">۲۰ گرم</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-700">سیب متوسط</span>
+                                        <span class="text-sm text-gray-500">۱ عدد</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="space-y-6">
+                    <!-- Water Tracker -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">آب نوشیده شده</h3>
+                        <div class="text-center mb-4">
+                            <div class="text-3xl font-bold text-blue-600 mb-2">۶</div>
+                            <div class="text-gray-600">لیوان از ۸ لیوان هدف</div>
+                        </div>
+                        
+                        <div class="grid grid-cols-4 gap-2 mb-4" id="water-tracker">
+                            <div class="water-glass filled" onclick="toggleWater(1)"></div>
+                            <div class="water-glass filled" onclick="toggleWater(2)"></div>
+                            <div class="water-glass filled" onclick="toggleWater(3)"></div>
+                            <div class="water-glass filled" onclick="toggleWater(4)"></div>
+                            <div class="water-glass filled" onclick="toggleWater(5)"></div>
+                            <div class="water-glass filled" onclick="toggleWater(6)"></div>
+                            <div class="water-glass" onclick="toggleWater(7)"></div>
+                            <div class="water-glass" onclick="toggleWater(8)"></div>
+                        </div>
+                        
+                        <button onclick="addWater()" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                            افزودن لیوان آب
+                        </button>
+                    </div>
+
+                    <!-- Quick Add Food -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">افزودن سریع غذا</h3>
+                        <div class="space-y-3">
+                            <input type="text" placeholder="نام غذا..." 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <input type="number" placeholder="کالری" 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option value="">انتخاب وعده</option>
+                                <option value="breakfast">صبحانه</option>
+                                <option value="lunch">ناهار</option>
+                                <option value="dinner">شام</option>
+                                <option value="snack">میان‌وعده</option>
+                            </select>
+                            <button onclick="addQuickFood()" class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors">
+                                افزودن غذا
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Nutrition Tips -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">نکات تغذیه‌ای</h3>
+                        <div class="space-y-4">
+                            <div class="p-3 bg-blue-50 rounded-lg">
+                                <h4 class="font-semibold text-blue-900 mb-1">نوشیدن آب</h4>
+                                <p class="text-sm text-blue-700">حداقل ۸ لیوان آب در روز بنوشید برای سلامت بهتر</p>
+                            </div>
+                            <div class="p-3 bg-green-50 rounded-lg">
+                                <h4 class="font-semibold text-green-900 mb-1">فیبر کافی</h4>
+                                <p class="text-sm text-green-700">مصرف روزانه سبزیجات و میوه‌ها را فراموش نکنید</p>
+                            </div>
+                            <div class="p-3 bg-orange-50 rounded-lg">
+                                <h4 class="font-semibold text-orange-900 mb-1">پروتئین</h4>
+                                <p class="text-sm text-orange-700">پروتئین کافی برای حفظ و ساخت عضله لازم است</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Persian Foods Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gradient mb-6">غذاهای سالم ایرانی</h2>
+                <p class="text-xl text-gray-600">برنامه‌های غذایی متناسب با فرهنگ و ذائقه ایرانی</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="meal-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <img src="resources/nutrition-1.jpg" alt="غذای سالم ایرانی" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">کباب مرغ با سبزیجات</h3>
+                        <p class="text-gray-600 mb-4">کباب مرغ کم‌چرب با فلفل، پیاز و گوجه کبابی</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-gray-500">۳۲۰ کالری</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">پروتئین بالا</span>
+                        </div>
+                        <button onclick="addToMealPlan('chicken-kebab')" class="btn-primary text-white px-4 py-2 rounded-lg w-full">
+                            افزودن به برنامه
+                        </button>
+                    </div>
+                </div>
+
+                <div class="meal-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <img src="resources/nutrition-2.jpg" alt="سالاد سالم" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">سالاد مدیترانه‌ای</h3>
+                        <p class="text-gray-600 mb-4">سبزیجات تازه با پنیر فتا و زیتون</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-gray-500">۲۸۰ کالری</span>
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">فیبر بالا</span>
+                        </div>
+                        <button onclick="addToMealPlan('mediterranean-salad')" class="btn-primary text-white px-4 py-2 rounded-lg w-full">
+                            افزودن به برنامه
+                        </button>
+                    </div>
+                </div>
+
+                <div class="meal-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <img src="resources/persian-nutrition.jpg" alt="غذای ایرانی سالم" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">عدسی با سبزیجات</h3>
+                        <p class="text-gray-600 mb-4">عدسی سنتی با سبزیجات تازه و ادویه‌های سالم</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-gray-500">۳۵۰ کالری</span>
+                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-sm">کربوهیدرات کمپلکس</span>
+                        </div>
+                        <button onclick="addToMealPlan('lentil-stew')" class="btn-primary text-white px-4 py-2 rounded-lg w-full">
+                            افزودن به برنامه
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nutrition Analysis -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gradient mb-6">تحلیل تغذیه‌ای</h2>
+                <p class="text-xl text-gray-600">نمودارهای پیشرفت و تحلیل عادت‌های غذایی شما</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-6">دریافت کالری هفتگی</h3>
+                    <div id="calorie-chart" style="height: 300px;"></div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-6">توزیع ماکرونوترینت‌ها</h3>
+                    <div id="macro-chart" style="height: 300px;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold text-gradient mb-4">Fitocut</h3>
+                <p class="text-gray-400 mb-8">پلتفرم جامع تناسب اندام و سلامتی</p>
+                <div class="border-t border-gray-800 pt-8">
+                    <p>&copy; ۲۰۲۴ Fitocut. تمامی حقوق محفوظ است.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
